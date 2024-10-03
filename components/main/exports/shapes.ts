@@ -1,23 +1,33 @@
 const shapes = [
     {
         id: 1,
-        name: "square"
+        name: "square",
+        selected: false,
+        keyframes: []
     },
     {
         id: 2,
-        name: "rectangle"
+        name: "rectangle",
+        selected: false,
+        keyframes: []
     },
     {
         id: 3,
-        name: "triangle"
+        name: "triangle",
+        selected: false,
+        keyframes: []
     },
     {
         id: 4,
-        name: "circle"
+        name: "circle",
+        selected: false,
+        keyframes: []
     },
     {
         id: 5,
-        name: "sphere"
+        name: "sphere",
+        selected: false,
+        keyframes: []
     }
 ]
 

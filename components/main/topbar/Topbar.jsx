@@ -8,10 +8,13 @@ import AllShapesCard from "./allshapescard/AllShapesCard"
 import shapes from "../exports/shapes"
 import { TbDiamondsFilled } from "react-icons/tb"
 import { IoSaveSharp } from "react-icons/io5"
+import Counter from "./counter/Counter"
 
 const Topbar = () => {
     const [show, setShow] = useState(false)
-    const { addedItems, storyMode, setStoryMode } = useContext(Context)
+    const [markBtnDisabled, setMarkBtnDisabled] = useState(true)
+
+    const { timelineValue, setAddedItems, addedItems, storyMode, setStoryMode } = useContext(Context)
     const divRef = useRef(null)
 
     const handleAddBtnClick = () => {
@@ -26,6 +29,27 @@ const Topbar = () => {
     const toggleStoryMode = () => {
         setStoryMode(e => !e)
     }
+
+    const handleAddMark = () => {
+        if (!markBtnDisabled)
+            setAddedItems(e => e.map(e => {
+                if (e.selected) {
+                    return { ...e, keyframes: [...e.keyframes, { val: timelineValue, selected: false }] }
+                }
+                return e
+            }))
+    }
+
+    useEffect(() => {
+        const selected = addedItems.find(e => e.selected)
+        const overTheMark = selected && selected.keyframes.some(e => e.val == timelineValue)
+        if (addedItems.some(e => e.selected) && !overTheMark) {
+            setMarkBtnDisabled(false)
+        } else {
+            setMarkBtnDisabled(true)
+        }
+    }, [addedItems, timelineValue])
+
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside)
         return () => {
@@ -56,25 +80,25 @@ const Topbar = () => {
                     </div>)}
             </div>
             {storyMode ? <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 gap-2 text-sm">
-                <div className="w-6 h-6 flex justify-center items-center bg-white rounded-lg cursor-pointer">
-                    <TbDiamondsFilled className="text-red-700" />
+                <div className={`w-6 h-6 flex justify-center items-center bg-white rounded-lg cursor-pointer ${markBtnDisabled ? "opacity-60" : "opacity-100"}`}>
+                    <TbDiamondsFilled className="text-red-700" onClick={handleAddMark} />
                 </div>
                 <div className="h-6 flex items-center rounded-lg cursor-pointer bg-red-700 text-white pr-1 pl-2 gap-1">
                     <p className="text-xs font-semibold">Delete</p>
                     <TbDiamondsFilled />
                 </div>
             </div> : <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 gap-2">
-                <div className="w-6 h-6 flex justify-center items-center bg-white rounded-lg cursor-pointer" onClick={toggleStoryMode}>
+                <div className="w-6 h-6 flex justify-center items-center bg-white rounded-lg cursor-pointer">
                     <IoMdPlay className="text-slate-900" />
                 </div>
-                <div className="w-6 h-6 flex justify-center items-center bg-white rounded-lg cursor-pointer">
+                <div className="w-6 h-6 flex justify-center items-center bg-white rounded-lg cursor-pointer" onClick={toggleStoryMode}>
                     <GoDotFill className="text-red-700" />
                 </div>
             </div>}
             {storyMode ? <div className="bg-yellow-600 flex items-center justify-center h-6 text-white pr-2 pl-3 rounded-lg gap-2 text-sm cursor-pointer" onClick={toggleStoryMode}>
                 <p className="text-xs font-semibold">Save</p>
                 <IoSaveSharp />
-            </div> : <div className="w-6 h-6 bg-white"></div>}
+            </div> : <Counter />}
         </div>
     );
 };
