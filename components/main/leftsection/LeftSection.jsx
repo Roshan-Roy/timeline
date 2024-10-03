@@ -5,7 +5,7 @@ import AddedShapesCard from "./addedshapescard/AddedShapesCard"
 const LeftSection = () => {
   const { addedItems } = useContext(Context)
   return ( 
-    <div className="bg-slate-600 w-48">
+    <div className="bg-slate-600 w-48 select-none">
       <div className="flex items-center bg-slate-600 justify-center text-white h-11 text-xs">
         <p>Added Items</p>
       </div>

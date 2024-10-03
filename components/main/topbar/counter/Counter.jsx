@@ -31,7 +31,7 @@ const Counter = () => {
   return (
     <div className="flex gap-1">
       <button className={`bg-slate-500 w-6 h-6 flex items-center justify-center text-sm rounded-sm text-white cursor-pointer ${disableSubBtn ? "opacity-40" : "opacity-100 "}`} onClick={handleSubBtn} disabled={disableSubBtn}><RiSubtractLine /></button>
-      <div className="bg-white font-semibold text-xs flex items-center justify-center w-8 h-6 rounded-sm select-none"><p>{scaleLength}</p></div>
+      <div className="bg-white font-semibold text-xs flex items-center justify-center w-8 h-6 rounded-sm"><p>{scaleLength}</p></div>
       <button className={`bg-slate-500 w-6 h-6 flex items-center justify-center text-sm rounded-sm text-white cursor-pointer ${disableAddBtn ? "opacity-40" : "opacity-100 "}`} onClick={handleAddBtn} disabled={disableAddBtn}><IoMdAdd /></button>
     </div>
   )

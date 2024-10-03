@@ -58,7 +58,7 @@ const Topbar = () => {
     }, [])
 
     return (
-        <div className="bg-slate-700 flex justify-between p-2 relative">
+        <div className="bg-slate-700 flex justify-between p-2 relative select-none">
             <div className="relative" ref={divRef}>
                 <div
                     className={`transition-transform duration-100 w-6 h-6 flex justify-center items-center bg-blue-500 rounded-lg cursor-pointer ${show && "rotate-45 bg-red-500"}`}
