@@ -40,6 +40,17 @@ const Topbar = () => {
             }))
     }
 
+    const handleDeleteMark = () => {
+        if (markBtnDisabled && addedItems.some(e => e.selected)) {
+            setAddedItems(e => e.map(e => {
+                if (e.selected) {
+                    return { ...e, keyframes: e.keyframes.filter(e => e.val !== timelineValue) }
+                }
+                return e
+            }))
+        }
+    }
+
     useEffect(() => {
         const selected = addedItems.find(e => e.selected)
         const overTheMark = selected && selected.keyframes.some(e => e.val == timelineValue)
@@ -98,7 +109,7 @@ const Topbar = () => {
                 <div className={`w-6 h-6 flex justify-center items-center bg-white rounded-lg cursor-pointer ${markBtnDisabled ? "opacity-60" : "opacity-100"}`}>
                     <TbDiamondsFilled className="text-red-700" onClick={handleAddMark} />
                 </div>
-                <div className="h-6 flex items-center rounded-lg cursor-pointer bg-red-700 text-white pr-1 pl-2 gap-1">
+                <div className={`h-6 flex items-center rounded-lg cursor-pointer bg-red-700 text-white pr-1 pl-2 gap-1 ${markBtnDisabled && addedItems.some(e => e.selected) ? "opacity-100" : "opacity-60"}`} onClick={handleDeleteMark}>
                     <p className="text-xs font-semibold">Delete</p>
                     <TbDiamondsFilled />
                 </div>

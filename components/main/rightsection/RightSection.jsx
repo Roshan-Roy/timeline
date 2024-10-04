@@ -89,6 +89,7 @@ const RightSection = () => {
                   left: `${i === 0 ? '15px' : `calc(${i * 15}px + 15px)`}`,
                   bottom: 0,
                   backgroundColor: 'white',
+                  transform: 'translateX(-50%)'
                 }}
               ></div>
               {i % 5 === 0 ? (
@@ -99,7 +100,7 @@ const RightSection = () => {
                     color: 'white',
                     top: '5px',
                     fontSize: '12px',
-                    transform: 'translateX(-50%)',
+                    transform: 'translateX(-50%)'
                   }}
                 >
                   {i / 5}
