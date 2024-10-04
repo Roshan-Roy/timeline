@@ -7,7 +7,7 @@ const Bar = ({ selected, keyframes }) => {
     return (
         <div className={`h-9 ${selected ? "bg-gray-600" : "bg-gray-800"} mb-1 relative`} style={{ width: `${barWidth}px` }}>
             {keyframes.map(e => {
-                return <Mark left={((e.val / 200) * 15) + 15} />
+                return <Mark left={((e.val / 200) * 15) + 15} selected={e.selected} />
             })}
         </div >
     )

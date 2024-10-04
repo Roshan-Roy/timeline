@@ -34,7 +34,7 @@ const Topbar = () => {
         if (!markBtnDisabled)
             setAddedItems(e => e.map(e => {
                 if (e.selected) {
-                    return { ...e, keyframes: [...e.keyframes, { val: timelineValue, selected: false }] }
+                    return { ...e, keyframes: [...e.keyframes, { val: timelineValue, selected: true }] }
                 }
                 return e
             }))
@@ -49,6 +49,21 @@ const Topbar = () => {
             setMarkBtnDisabled(true)
         }
     }, [addedItems, timelineValue])
+
+    useEffect(() => {
+        setAddedItems(e => e.map(e => {
+            if (e.selected)
+                return {
+                    ...e, keyframes: e.keyframes.map(e => {
+                        if (e.val === timelineValue) return { ...e, selected: true }
+                        return { ...e, selected: false }
+                    })
+                }
+            return {
+                ...e, keyframes: e.keyframes.map(e => ({ ...e, selected: false }))
+            }
+        }))
+    }, [timelineValue])
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside)

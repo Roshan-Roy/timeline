@@ -3,16 +3,21 @@ import { MdDeleteForever } from "react-icons/md"
 import Context from "../../Context"
 
 const AddedShapesCard = ({ id, name, selected }) => {
-    const { setAddedItems } = useContext(Context)
+    const { setAddedItems, timelineValue } = useContext(Context)
     const handleDltBtnClick = () => {
         setAddedItems(e => [...e.filter(e => e.id !== id)])
     }
     const handleCardClick = () => {
         setAddedItems(e => [...e.map(e => {
             if (e.id === id) {
-                return { ...e, selected: true }
+                return {
+                    ...e, selected: true, keyframes: e.keyframes.map(e => {
+                        if (e.val === timelineValue) return { ...e, selected: true }
+                        return { ...e, selected: false }
+                    })
+                }
             }
-            return { ...e, selected: false }
+            return { ...e, selected: false, keyframes: e.keyframes.map(e => ({ ...e, selected: false })) }
         })])
     }
     return (
