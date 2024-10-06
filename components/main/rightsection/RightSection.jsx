@@ -4,7 +4,7 @@ import Context from '../Context'
 
 const RightSection = () => {
   const [isDragging, setIsDragging] = useState(false)
-  const { trackValue, setTrackValue, scaleLength, addedItems, barWidth } = useContext(Context)
+  const { trackValue, setTrackValue, scaleLength, addedItems, barWidth, storyMode, playing } = useContext(Context)
 
   const trackRef = useRef(null);
   const markerRef = useRef(null);
@@ -24,23 +24,27 @@ const RightSection = () => {
   };
 
   const handleTrackClick = (e) => {
-    const position = calculatePosition(e.clientX)
-    setTrackValue(position)
+    if (!playing) {
+      const position = calculatePosition(e.clientX)
+      setTrackValue(position)
+    }
   };
 
   const handleMouseDown = () => {
-    setIsDragging(true)
+    if (!playing)
+      setIsDragging(true)
   };
 
   const handleMouseMove = (e) => {
-    if (isDragging) {
+    if (isDragging && !playing) {
       const position = calculatePosition(e.clientX)
       setTrackValue(position)
     }
   };
 
   const handleMouseUp = () => {
-    setIsDragging(false)
+    if (!playing)
+      setIsDragging(false)
   };
 
   useEffect(() => {
@@ -52,6 +56,10 @@ const RightSection = () => {
   useEffect(() => {
     markerRef.current.style.setProperty('height', `${addedItems.length * 40}px`)
   }, [addedItems])
+
+  useEffect(() => {
+    trackRef.current.scrollTo(0, 0)
+  }, [storyMode,playing])
 
   useEffect(() => {
     if (isDragging) {

@@ -2,23 +2,12 @@ import { useContext, useEffect, useState } from "react"
 import Context from "../../Context"
 import { RiSubtractLine } from "react-icons/ri"
 import { IoMdAdd } from "react-icons/io"
+import largestKeyframe from "../../exports/largestkeyframe"
 
 const Counter = () => {
-  const { scaleLength, setScaleLength, addedItems } = useContext(Context)
+  const { scaleLength, setScaleLength, addedItems, playing } = useContext(Context)
   const [disableSubBtn, setDisableSubBtn] = useState(true)
   const [disableAddBtn, setDisableAddBtn] = useState(false)
-
-  const largestKeyframe = () => {
-    let largest = 0;
-    addedItems.forEach(e => {
-      e.keyframes.forEach(e => {
-        if (e.val > largest) {
-          largest = e.val
-        }
-      })
-    });
-    return largest
-  }
 
   const handleAddBtn = () => {
     setScaleLength(e => e + 10)
@@ -28,17 +17,27 @@ const Counter = () => {
   }
 
   useEffect(() => {
-    if (scaleLength <= 20 || (largestKeyframe() > (scaleLength - 10) * 5 * 200)) {
+    if (scaleLength <= 20 || (largestKeyframe(addedItems) > (scaleLength - 10) * 5 * 200) || playing) {
       setDisableSubBtn(true)
     } else {
       setDisableSubBtn(false)
     }
-    if (scaleLength >= 200) {
+    if (scaleLength >= 200 || playing) {
       setDisableAddBtn(true)
     } else {
       setDisableAddBtn(false)
     }
   }, [scaleLength, addedItems])
+
+  useEffect(() => {
+    if (playing) {
+      setDisableSubBtn(true)
+      setDisableAddBtn(true)
+    } else {
+      setDisableSubBtn(false)
+      setDisableAddBtn(false)
+    }
+  }, [playing])
 
   return (
     <div className="flex gap-1">

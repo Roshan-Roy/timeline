@@ -5,6 +5,7 @@ import LeftSection from "./leftsection/LeftSection"
 import RightSection from "./rightsection/RightSection"
 import Context from "./Context"
 import { useState, useEffect } from "react"
+import largestKeyframe from "./exports/largestkeyframe"
 
 const Main = () => {
     const [storyMode, setStoryMode] = useState(false)
@@ -13,6 +14,8 @@ const Main = () => {
     const [timelineValue, setTimelineValue] = useState(0)
     const [scaleLength, setScaleLength] = useState(20)
     const [barWidth, setBarWidth] = useState(0)
+    const [playing, setPlaying] = useState(false)
+    const [linear, setLinear] = useState(true)
 
     useEffect(() => {
         setTimelineValue(((trackValue / 15) - 1) * 200)
@@ -24,8 +27,24 @@ const Main = () => {
     }, [scaleLength])
 
     useEffect(() => {
-        console.log(addedItems)
-    }, [addedItems])
+        setTrackValue(15)
+        setAddedItems(e => e.map(e => ({ ...e, selected: false, keyframes: e.keyframes.map(e => ({ ...e, selected: false })) })))
+    }, [storyMode])
+
+    useEffect(() => {
+        setTrackValue(15)
+    }, [playing])
+
+    useEffect(() => {
+        const firstNum = Math.trunc(largestKeyframe(addedItems) / 10000)
+        if (firstNum >= (scaleLength / 10)) {
+            if (largestKeyframe(addedItems) === (firstNum * 10000)) {
+                setScaleLength(firstNum * 10)
+            } else {
+                setScaleLength((firstNum + 1) * 10)
+            }
+        }
+    }, [/*or addedItems*/]) //set the scale length based on the largest keyframe in addedItems array on page load
 
     return (
         <Context.Provider value={{
@@ -39,7 +58,11 @@ const Main = () => {
             setScaleLength,
             trackValue,
             setTrackValue,
-            barWidth
+            barWidth,
+            playing,
+            setPlaying,
+            linear,
+            setLinear
         }}>
             <div className="my-10 mx-auto w-8/12">
                 <Topbar />

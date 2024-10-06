@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react"
+import { useContext } from "react"
 import Context from "../../Context"
 import Mark from "./mark/Mark"
 
