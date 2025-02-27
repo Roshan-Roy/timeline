@@ -44,7 +44,7 @@ const Main = () => {
             setScaleLength((firstNum + 1) * 10);
         }
     }
-}, [addedItems, scaleLength]); //set the scale length based on the largest keyframe in addedItems array on page load
+}, []); //set the scale length based on the largest keyframe in addedItems array on page load
 
     return (
         <Context.Provider value={{
