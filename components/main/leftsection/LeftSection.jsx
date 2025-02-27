@@ -14,7 +14,7 @@ const LeftSection = () => {
           <p>No items</p>
         </div> : 
           <div className="added_items h-36 overflow-auto">
-            {addedItems.map((e,i) => <AddedShapesCard key={i} {...e} />)}
+            {addedItems.map(() => <AddedShapesCard key={i} {...e} />)}
           </div>
         }  
       </div>
