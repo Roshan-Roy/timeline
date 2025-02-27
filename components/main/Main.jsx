@@ -36,15 +36,15 @@ const Main = () => {
     }, [playing])
 
     useEffect(() => {
-        const firstNum = Math.trunc(largestKeyframe(addedItems) / 10000)
-        if (firstNum >= (scaleLength / 10)) {
-            if (largestKeyframe(addedItems) === (firstNum * 10000)) {
-                setScaleLength(firstNum * 10)
-            } else {
-                setScaleLength((firstNum + 1) * 10)
-            }
+    const firstNum = Math.trunc(largestKeyframe(addedItems) / 10000);
+    if (firstNum >= (scaleLength / 10)) {
+        if (largestKeyframe(addedItems) === (firstNum * 10000)) {
+            setScaleLength(firstNum * 10);
+        } else {
+            setScaleLength((firstNum + 1) * 10);
         }
-    }, [/*or addedItems*/]) //set the scale length based on the largest keyframe in addedItems array on page load
+    }
+}, [addedItems, scaleLength]); //set the scale length based on the largest keyframe in addedItems array on page load
 
     return (
         <Context.Provider value={{
